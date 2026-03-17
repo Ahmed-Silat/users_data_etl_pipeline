@@ -1,0 +1,55 @@
+# Python cache
+**pycache**/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+venv/
+env/
+.venv/
+ENV/
+
+# Environment variables
+.env
+.env.*
+
+# Logs
+logs/*
+!logs/.gitkeep
+*.log
+
+# Cleaned output data
+cleaned/*
+!cleaned/.gitkeep
+
+# Raw data
+data/*
+!data/.gitkeep
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor settings
+.vscode/
+.idea/
+
+# Python build files
+build/
+dist/
+*.egg-info/
+
+# Database files
+*.db
+*.sqlite3
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Docker volumes
+postgres_data/
+docker-volume/
+
+# Temporary files
+*.tmp
+*.temp
