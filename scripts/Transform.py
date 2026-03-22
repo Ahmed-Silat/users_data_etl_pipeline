@@ -4,15 +4,23 @@ import math
 from datetime import datetime
 
 seen_records = set()
-INVALID_DATA = {"", "???", "###", None, "N/A"}
+INVALID_DATA = {"", "???", "??", "###", None, "N/A", "n/a"}
 EMAIL_REGEX = r"^[\w\.-]+@[\w\.-]+\.\w+$"
 
-def is_valid_int(val):
+def clan_integer(val):
     try:
-        int(val)
-        return True
+        if val in INVALID_DATA:
+            return None
+        
+        value = val.replace(",", "").strip()
+
+        if value == "":
+            return None
+
+        return int(value)
+
     except:
-        return False
+        return None
 
 def parse_timestamp(ts):
     formats = [
@@ -53,7 +61,7 @@ def clean_email(email):
     
 def clean_age(age):
     try:
-        age = math.floor(age)
+        age = int(float(age))
 
         if age <= 0:
             return None
@@ -76,9 +84,9 @@ def clean_amount(amount):
         return None
 
 def clean_record(record):
-    user_id = record.get("user_id")
+    user_id = clan_integer(record.get("user_id"))
 
-    if not user_id or not is_valid_int(user_id):
+    if not user_id:
         logging.warning("Missing user_id")
         return (None, "invalid")
     
@@ -125,18 +133,26 @@ def clean_record(record):
     
     is_active = record.get("is_active")
 
-    if is_active is None:
+    if is_active in INVALID_DATA:
         logging.warning("Invalid Status")
         return (None, "invalid")
+    else:
+        is_active = is_active.strip().title()
+
+        if is_active == "True":
+            is_active = True
+        else:
+            is_active = False
+        
     
     device = record.get("device").lower()
 
     if not device:
         device = "unknown"
     
-    transaction_id = record.get("transaction_id")
+    transaction_id = clan_integer(record.get("transaction_id"))
 
-    if not transaction_id or not is_valid_int(transaction_id):
+    if not transaction_id:
         logging.warning("Invalid transaction_id")
         return (None, "invalid")
     
