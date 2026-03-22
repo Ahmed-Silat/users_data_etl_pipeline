@@ -1,5 +1,7 @@
 import csv
 import psycopg2
+import os
+from dotenv import load_dotenv
 
 def save_cleaned_csv(records, file_path):
     if not records:
@@ -23,12 +25,14 @@ def save_cleaned_csv(records, file_path):
 
 def load_into_database(records):
 
+    load_dotenv()
+
     conn = psycopg2.connect(
-        host = "localhost",
-        database = "userdb",
-        user = "admin",
-        password = "admin",
-        port = 5432
+        host = os.getenv("DB_HOST"),
+        database = os.getenv("DB_NAME"),
+        user = os.getenv("DB_USER"),
+        password = os.getenv("DB_PASSWORD"),
+        port = os.getenv("DB_PORT")
     )
 
     cursor = conn.cursor()
