@@ -25,7 +25,7 @@ def load_into_database(records):
 
     conn = psycopg2.connect(
         host = "localhost",
-        database = "logdb",
+        database = "userdb",
         user = "admin",
         password = "admin",
         port = 5432
@@ -35,7 +35,7 @@ def load_into_database(records):
 
     cursor.execute("""
     CREATE TABLE IF NOT EXISTS users_info (
-        id GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+        id SERIAL PRIMARY KEY,
         user_id INTEGER,
         name TEXT,
         age INTEGER,
@@ -72,9 +72,9 @@ def load_into_database(records):
     
     try:
         cursor.executemany("""
-            INSERT INTO user_info
-            (user_id, name, age, email, signup_date, last_login, purchase_amount, country, city, is_active device, transaction_id)
-            VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO users_info
+            (user_id, name, age, email, signup_date, last_login, purchase_amount, country, city, is_active, device, transaction_id)
+            VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, values)
         
         conn.commit()

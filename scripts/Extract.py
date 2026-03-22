@@ -4,9 +4,9 @@ def extract_csv_data(file_path):
     try:
         with open(file_path, "r", newline="", encoding="utf-8") as file:
             reader = csv.DictReader(file)
-            print(type(reader))
+            # print(type(reader))
             for row in reader:
-                print(row)
+                # print(row)
                 record = {
                     "user_id": row.get("user_id"),
                     "first_name": row.get("first_name"),
