@@ -25,6 +25,7 @@ cleaned/*
 # Raw data
 data/*
 !data/.gitkeep
+!data/dataset_link.txt
 
 # OS files
 .DS_Store
